@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>
+    <form action="http://127.0.0.1:5000/faculty_login" method="POST">
+        <table>
+        <tr>
+            <td>Faculty ID:</td>
+            <td><input type="text" name="faculty_id" placeholder="Enter Faculty ID"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" name="pass_word" placeholder="Enter password"></td>
+        </tr>
+        <tr>
+        <td><input type="submit" value="Login"></td>
+        </tr>
+        </table>
+    </form>
+</div>
+{% endblock body %}

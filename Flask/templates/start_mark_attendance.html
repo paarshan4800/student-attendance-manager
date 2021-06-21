@@ -1,0 +1,77 @@
+<h3>MARK ATTENDANCE:</h4>
+<div id="hour">{{hour}}</div>
+<table class="table table-striped">
+<td> <button type="button" id="btn1" class="btn btn-primary" >UNDO</button> </td> 
+{% for i in student_list %}
+<tr>
+<td> <button type="button" id="btn1" class="btn btn-success">Present</button> </td> 
+<td class="content">{{i[0]}}</td>
+<td>
+{{ i[1] }} {{ i[2] }}
+</td>
+<td> <button type="button" id="btn2" class="btn btn-danger">Absent</button> </td>
+{% endfor %}
+<tr>
+<td > <button type="button" id="submit" class="btn btn-primary" >Submit</button> </td> 
+</tr>
+</table>
+
+<script>
+$(document).ready(function(){
+    
+    var hr=$("#hour").text()
+    console.log(hr);
+    var js_str = {present:[],absent:[],hour:hr};
+    var select;
+    var flag;
+    
+    //alert(hr)
+        $(".btn-success").on("click",function(){
+        var x;
+        select=$(this);
+        $(this).addClass('focus');
+        x=$(this).parent().next("td").text();
+        js_str.present.push(x);
+        console.log(js_str);
+        //console.log(typeof(present))
+        flag=0;
+    });
+    $(".btn-danger").on("click",function(){
+        var x;
+        select=$(this);
+        $(this).addClass('focus');
+        x=$(this).parent().prev("td").prev("td").text();
+        js_str.absent.push(x);
+        console.log(js_str);
+        flag=1;
+    });
+    $("#btn1").on("click",function(){
+        if(flag==0){
+            select.removeClass('focus');
+            js_str.present.pop();
+            console.log(js_str);
+        }
+        else{
+             select.removeClass('focus');
+            js_str.absent.pop();
+            console.log(js_str);
+        }
+    });
+    $("#submit").on("click",function(){
+       // console.log(present);
+        //console.log(absent);
+        
+        $.ajax({
+                    method: 'POST',
+                    url: 'insert_attendance',
+                    data: js_str,
+                    dataType:"JSON",
+                    success: function(response){
+                        alert("success");
+                    }
+        });
+    });
+});
+
+
+</script>
